@@ -1,17 +1,22 @@
 package com.king.simplereading.mvp.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.king.simplereading.R;
+import com.king.simplereading.base.BaseActivity;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
 {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected int getLayoutId()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState)
+    {
+
     }
 }

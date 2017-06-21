@@ -9,6 +9,7 @@ import android.view.Window;
 
 import com.blankj.utilcode.util.EmptyUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.king.simplereading.app.App;
 import com.king.simplereading.rx.LifeSubscription;
 import com.king.simplereading.utils.ActivityManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -33,26 +34,42 @@ public abstract class BaseActivity extends RxAppCompatActivity implements LifeSu
         ActivityManager.getInstance().onCreate(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getLayoutId());
+        baseInit();
+        init(savedInstanceState);
+    }
+
+
+    /**
+     * 此方法一般用于初始化一些基类需要初始化的操作
+     */
+    protected void baseInit()
+    {
 
     }
 
     protected abstract int getLayoutId();
 
+    protected abstract void init(Bundle savedInstanceState);
 
-    protected void setToolBar(Toolbar toolbar, String title) {
-        setToolBar(toolbar,title,true);
+
+    protected void setToolBar(Toolbar toolbar, String title)
+    {
+        setToolBar(toolbar, title, true);
     }
 
-    protected void setToolBar(Toolbar toolbar, String title , boolean enable) {
+    protected void setToolBar(Toolbar toolbar, String title, boolean enable)
+    {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(enable);//1.显示toolbar的返回按钮左上角图标
         getSupportActionBar().setDisplayShowHomeEnabled(enable);//2.显示toolbar的返回按钮12要一起用
         getSupportActionBar().setDisplayShowTitleEnabled(enable);//显示toolbar的标题
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 onBackPressed();
             }
         });
@@ -61,7 +78,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements LifeSu
     @Override
     public void bindSubscription(Subscription subscription)
     {
-        if (this.mCompositeSubscription == null) {
+        if (this.mCompositeSubscription == null)
+        {
             this.mCompositeSubscription = new CompositeSubscription();
         }
         this.mCompositeSubscription.add(subscription);
@@ -72,7 +90,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements LifeSu
     {
         super.onDestroy();
         ActivityManager.getInstance().onDestroy(this);
-        if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
+        if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions())
+        {
             this.mCompositeSubscription.unsubscribe();
         }
     }
@@ -84,12 +103,29 @@ public abstract class BaseActivity extends RxAppCompatActivity implements LifeSu
         super.finish();
     }
 
+
+    protected long mExitTime = 0;
+
+    public void exitApp()
+    {
+        if (System.currentTimeMillis() - mExitTime > 2000)
+        {
+            showToast("再按一次退出!");
+        } else
+        {
+            App.getApplication().exitApp(true);
+        }
+        mExitTime = System.currentTimeMillis();
+    }
+
+
     protected boolean isEmpty(Object obj)
     {
         return EmptyUtils.isEmpty(obj);
     }
 
-    protected void toastShort(String s){
+    protected void showToast(String s)
+    {
         ToastUtils.showShort(s);
     }
 

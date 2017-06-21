@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.blankj.utilcode.util.Utils;
+import com.king.simplereading.utils.ActivityManager;
 
 /**
  * <请描述这个类是干什么的>
@@ -30,7 +31,7 @@ public class App extends Application
         return (App) context.getApplicationContext();
     }
 
-    public static App getInstance()
+    public static App getApplication()
     {
         return sInstance;
     }
@@ -40,7 +41,14 @@ public class App extends Application
     }
 
 
-
+    public void exitApp(boolean isBackground)
+    {
+        ActivityManager.getInstance().finishAllActivity();
+        if (!isBackground)
+        {
+            System.exit(0);
+        }
+    }
 
 
 }
