@@ -9,4 +9,5 @@ package com.king.simplereading.http;
 
 public interface Stateful
 {
+    void setState(int state);
 }

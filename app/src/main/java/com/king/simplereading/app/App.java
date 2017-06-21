@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import com.blankj.utilcode.util.Utils;
+import com.king.simplereading.di.components.AppComponent;
+import com.king.simplereading.di.components.DaggerAppComponent;
+import com.king.simplereading.di.modules.AppModule;
 import com.king.simplereading.utils.ActivityManager;
 
 /**
@@ -17,6 +20,7 @@ public class App extends Application
 {
     private static App sInstance;
 
+    private AppComponent mAppComponent;
 
     @Override
     public void onCreate()
@@ -27,7 +31,8 @@ public class App extends Application
     }
 
 
-    public static App getContext(Context context){
+    public static App getContext(Context context)
+    {
         return (App) context.getApplicationContext();
     }
 
@@ -36,8 +41,20 @@ public class App extends Application
         return sInstance;
     }
 
-    private void init(){
+    private void init()
+    {
         Utils.init(this);
+    }
+
+
+    public AppComponent getAppComponent()
+    {
+        if (mAppComponent == null)
+        {
+            mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        }
+
+        return mAppComponent;
     }
 
 
