@@ -9,13 +9,16 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+
+        //lambda
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        //photoview使用到 https://github.com/chrisbanes/PhotoView/
+
         maven { url "https://jitpack.io" }
     }
 }
