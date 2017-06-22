@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Simple Reading</string>
+    <string name="settings">设置</string>
+    <string name="exit">退出</string>
+    <string name="skin">个性换肤</string>
+    <string name="about">关于简阅</string>
+    <string name="feedback">意见反馈</string>
 </resources>
