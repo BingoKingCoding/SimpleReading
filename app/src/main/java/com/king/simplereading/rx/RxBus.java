@@ -10,6 +10,7 @@ import rx.subjects.Subject;
  * <请描述这个类是干什么的>
  * Created by wwb on 2017/6/21 16:09.
  * 参考网址:  http://www.loongwind.com/archives/264.html 看这个学习rxbus怎么用
+ * http://gank.io/post/560e15be2dca930e00da1083  看这个学习rxjava
  */
 
 public class RxBus

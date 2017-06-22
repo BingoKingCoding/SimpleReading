@@ -1,5 +1,6 @@
 package com.king.simplereading.rx;
 
+
 import rx.Subscription;
 
 /**

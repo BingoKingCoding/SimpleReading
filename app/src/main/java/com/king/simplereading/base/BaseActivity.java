@@ -14,6 +14,8 @@ import com.king.simplereading.rx.LifeSubscription;
 import com.king.simplereading.utils.ActivityManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -26,7 +28,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements LifeSu
 {
     protected final String TAG = this.getClass().getSimpleName();
     private CompositeSubscription mCompositeSubscription;
-
+    protected Unbinder mUnbinder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -34,6 +36,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements LifeSu
         ActivityManager.getInstance().onCreate(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getLayoutId());
+        mUnbinder = ButterKnife.bind(this);
         baseInit();
         init(savedInstanceState);
     }
@@ -94,6 +97,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements LifeSu
         {
             this.mCompositeSubscription.unsubscribe();
         }
+        mUnbinder.unbind();
     }
 
     @Override
