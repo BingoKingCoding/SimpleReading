@@ -3,6 +3,7 @@ package com.king.simplereading.base;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
@@ -12,7 +13,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.king.simplereading.app.App;
 import com.king.simplereading.rx.LifeSubscription;
 import com.king.simplereading.utils.ActivityManager;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -24,7 +24,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by king on 2017/6/19 17:37.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements LifeSubscription
+public abstract class BaseActivity extends AppCompatActivity implements LifeSubscription
 {
     protected final String TAG = this.getClass().getSimpleName();
     private CompositeSubscription mCompositeSubscription;

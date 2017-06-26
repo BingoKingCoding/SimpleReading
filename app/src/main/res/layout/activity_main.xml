@@ -7,7 +7,19 @@
     tools:context="com.king.simplereading.mvp.ui.activity.MainActivity">
 
 
+    <include
+        android:id="@+id/include_app_bar_main"
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
+    <include
+        android:id="@+id/include_nav_header_main"
+        layout="@layout/nav_header_main"
+        android:layout_marginTop="-27dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
 
 
 </android.support.v4.widget.DrawerLayout>
