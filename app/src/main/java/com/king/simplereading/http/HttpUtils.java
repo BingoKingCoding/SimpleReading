@@ -27,7 +27,6 @@ public class HttpUtils
             callback.setTarget(target);
         }
 
-
         if (!NetworkUtils.isConnected())
         {
             ToastUtils.showShort("网络连接已断开");

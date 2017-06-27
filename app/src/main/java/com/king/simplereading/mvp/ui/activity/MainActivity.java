@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.king.simplereading.R;
 import com.king.simplereading.app.App;
 import com.king.simplereading.base.BaseActivity;
@@ -18,6 +19,7 @@ import com.king.simplereading.mvp.ui.adapter.HomeFragmentPageAdapter;
 import com.king.simplereading.mvp.ui.fragment.AndroidFragment;
 import com.king.simplereading.mvp.ui.fragment.HomeFragment;
 import com.king.simplereading.mvp.ui.fragment.RightFragment;
+import com.king.simplereading.utils.SPConfig;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -58,6 +60,17 @@ public class MainActivity extends BaseActivity
     {
         setToolBar(tbToolbar, "", false);
         initView();
+        initData();
+
+    }
+
+    private void initData()
+    {
+        SPUtils spUtils = SPConfig.getInstance().getSpUtils();
+        if (!spUtils.getBoolean("home_list_boolean")) {
+            spUtils.put("home_list", "知乎日报&&知乎热门&&知乎主题&&知乎专栏&&");
+            spUtils.put("home_list_boolean", true);
+        }
     }
 
     @OnClick({R.id.fl_title_menu,R.id.fl_exit_app,R.id.fl_feedback,R.id.fl_about_us,R.id.fl_setting,R.id.fl_theme_color})
