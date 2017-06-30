@@ -16,20 +16,17 @@ import retrofit2.Retrofit;
  * Created by wwb on 2017/6/27 14:37.
  */
 @Module
-public class GankIoHttpModule extends BaseHttpModule
-{
+public class GankIoHttpModule extends BaseHttpModule {
     @Singleton
     @Provides
     @GankUrl
-    Retrofit provideGankIoRetrofit(Retrofit.Builder builder, OkHttpClient client)
-    {
-        return createRetrofit(builder,client, GankIoService.API_GANKIO);
+    Retrofit provideGankIoRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+        return createRetrofit(builder, client, GankIoService.API_GANKIO);
     }
-
 
     @Singleton
     @Provides
-    GankIoService provideGankIoService(@GankUrl Retrofit retrofit){
+    GankIoService provideGankIoService(@GankUrl Retrofit retrofit) {
         return retrofit.create(GankIoService.class);
     }
 

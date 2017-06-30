@@ -1,5 +1,6 @@
 package com.king.simplereading.mvp.ui.fragment;
 
+import com.king.simplereading.R;
 import com.king.simplereading.base.BaseFragment;
 
 /**
@@ -20,7 +21,7 @@ public class RightFragment extends BaseFragment
     @Override
     protected int getLayoutId()
     {
-        return 0;
+        return R.layout.fragment_android;
     }
 
     @Override

@@ -17,17 +17,17 @@ import javax.inject.Inject;
 
 public class GankIoAndroidPresenterImpl extends BasePresenter<AndroidFragmentContract.View> implements AndroidFragmentContract.Presenter
 {
-    private GankIoService gankIoService;
+    private GankIoService mGankIoService;
 
     @Inject
-    public GankIoAndroidPresenterImpl(GankIoService gankIoService){
-        this.gankIoService = gankIoService;
+    public GankIoAndroidPresenterImpl(GankIoService mGankIoService) {
+        this.mGankIoService = mGankIoService;
     }
 
     @Override
     public void fetchGankIoData(int page, int pre_page)
     {
-        invoke(gankIoService.getGankIoData("Android",pre_page,page),new Callback<GankIoDataBean>(){
+        invoke(mGankIoService.getGankIoData("Android",pre_page,page),new Callback<GankIoDataBean>(){
             @Override
             public void onResponse(GankIoDataBean data)
             {

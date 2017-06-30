@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.king.simplereading.R;
 import com.king.simplereading.base.BaseFragment;
-import com.king.simplereading.di.modules.fragmentmodules.AndroidModule;
-import com.king.simplereading.di.modules.httpmodules.GankIoHttpModule;
 import com.king.simplereading.http.model.GankIoDataBean;
 import com.king.simplereading.mvp.contract.AndroidFragmentContract;
 import com.king.simplereading.mvp.presenter.GankIoAndroidPresenterImpl;
@@ -63,10 +61,10 @@ public class AndroidFragment extends BaseFragment<GankIoAndroidPresenterImpl> im
     @Override
     protected void initInject()
     {
-        DaggerAndroidComponent.builder()
-                .gankIoHttpModule(new GankIoHttpModule())
-                .androidModule(new AndroidModule())
-                .build().injectAndroid(this);
+//        DaggerAndroidComponent.builder()
+//                .gankIoHttpModule(new GankIoHttpModule())
+//                .androidModule(new AndroidModule())
+//                .build().injectAndroid(this);
     }
 
     @Override
