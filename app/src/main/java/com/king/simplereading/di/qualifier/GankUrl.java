@@ -2,9 +2,11 @@ package com.king.simplereading.di.qualifier;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Qualifier;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 
 /**
  * <请描述这个类是干什么的>
@@ -13,7 +15,7 @@ import javax.inject.Qualifier;
 
 @Qualifier
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RUNTIME)
 public @interface GankUrl
 {
 }

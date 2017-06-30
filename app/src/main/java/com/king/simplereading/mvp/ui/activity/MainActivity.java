@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -86,6 +87,12 @@ public class MainActivity extends BaseActivity
             case R.id.fl_feedback:
                 break;
             case R.id.fl_about_us:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Material Design Dialog");
+                builder.setMessage("这是 android.support.v7.app.AlertDialog 中的样式");
+                builder.setNegativeButton("取消", null);
+                builder.setPositiveButton("确定", null);
+                builder.show();
                 break;
             case R.id.fl_setting:
                 break;

@@ -26,8 +26,9 @@ public class GankIoHttpModule extends BaseHttpModule
         return createRetrofit(builder,client, GankIoService.API_GANKIO);
     }
 
-    @Provides
+
     @Singleton
+    @Provides
     GankIoService provideGankIoService(@GankUrl Retrofit retrofit){
         return retrofit.create(GankIoService.class);
     }

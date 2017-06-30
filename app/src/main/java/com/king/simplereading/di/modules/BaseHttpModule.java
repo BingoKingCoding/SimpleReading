@@ -20,7 +20,7 @@ public class BaseHttpModule
 {
     @Singleton
     @Provides
-    Retrofit.Builder provideRetrofitBuilder(){
+    Retrofit.Builder provideRetrofitBuilder() {
         return new Retrofit.Builder();
     }
 
@@ -32,22 +32,25 @@ public class BaseHttpModule
 
     @Singleton
     @Provides
-    OkHttpClient provideOkhttpclient(OkHttpClient.Builder builder){
-        return builder.connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20,TimeUnit.SECONDS)
-                .writeTimeout(20,TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true).build();
+    OkHttpClient provideClient(OkHttpClient.Builder builder) {
+        //设置超时
+        builder.connectTimeout(10, TimeUnit.SECONDS);
+        builder.readTimeout(20, TimeUnit.SECONDS);
+        builder.writeTimeout(20, TimeUnit.SECONDS);
+        //错误重连
+        builder.retryOnConnectionFailure(true);
+        return builder.build();
     }
 
 
-    protected Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url){
-        return builder.baseUrl(url)
+    protected Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url) {
+        return builder
+                .baseUrl(url)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
-
 
 
 }

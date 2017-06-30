@@ -18,6 +18,7 @@ import javax.inject.Inject;
 public class GankIoAndroidPresenterImpl extends BasePresenter<AndroidFragmentContract.View> implements AndroidFragmentContract.Presenter
 {
     private GankIoService gankIoService;
+
     @Inject
     public GankIoAndroidPresenterImpl(GankIoService gankIoService){
         this.gankIoService = gankIoService;
