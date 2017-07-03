@@ -9,7 +9,6 @@ import com.king.simplereading.R;
 import com.king.simplereading.base.BaseFragment;
 import com.king.simplereading.http.model.GankIoDataBean;
 import com.king.simplereading.mvp.contract.AndroidFragmentContract;
-import com.king.simplereading.mvp.presenter.GankIoAndroidPresenterImpl;
 import com.king.simplereading.view.EasyLoadMoreView;
 
 import java.util.List;
@@ -23,7 +22,7 @@ import butterknife.BindView;
  * @Email:634051075@qq.com
  */
 
-public class AndroidFragment extends BaseFragment<GankIoAndroidPresenterImpl> implements AndroidFragmentContract.View, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener
+public class AndroidFragment extends BaseFragment implements AndroidFragmentContract.View, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener
 {
     @BindView(R.id.rv_android)
     RecyclerView mRvAndroid;
@@ -37,7 +36,6 @@ public class AndroidFragment extends BaseFragment<GankIoAndroidPresenterImpl> im
     @Override
     protected void loadData()
     {
-        mPresenter.fetchGankIoData(page, PRE_PAGE);
     }
 
     @Override
@@ -95,7 +93,7 @@ public class AndroidFragment extends BaseFragment<GankIoAndroidPresenterImpl> im
         page = 0;
         isRefresh = true;
         mAdapter.setEnableLoadMore(false);
-        mPresenter.fetchGankIoData(page, PRE_PAGE);
+//        mPresenter.fetchGankIoData(page, PRE_PAGE);
     }
 
     /**
