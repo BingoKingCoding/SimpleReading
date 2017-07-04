@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.king.simplereading.R;
 import com.king.simplereading.http.model.GankIoDataBean;
+import com.king.simplereading.mvp.ui.activity.WebViewActivity;
 import com.king.simplereading.utils.GlideUtils;
 import com.king.simplereading.utils.TimeUtil;
 
@@ -26,7 +27,7 @@ public class GankIoAndroidAdapter extends BaseQuickAdapter<GankIoDataBean.Result
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GankIoDataBean.ResultBean item)
+    protected void convert(BaseViewHolder helper, final GankIoDataBean.ResultBean item)
     {
         ImageView ivAndroidPic = helper.getView(R.id.iv_android_pic);
         // 显示gif图片会很耗内存
@@ -44,7 +45,7 @@ public class GankIoAndroidAdapter extends BaseQuickAdapter<GankIoDataBean.Result
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                WebViewActivity.loadUrl(mContext, item.getUrl(), item.getSource());
+                WebViewActivity.loadUrl(mContext, item.getUrl(), item.getSource());
             }
         });
 

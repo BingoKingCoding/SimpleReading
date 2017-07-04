@@ -5,4 +5,10 @@
     <string name="skin">个性换肤</string>
     <string name="about">关于简阅</string>
     <string name="feedback">意见反馈</string>
+
+    <string name="actionbar_webview_share">分享到</string>
+    <string name="actionbar_webview_cope">复制链接</string>
+    <string name="actionbar_webview_open">打开链接</string>
+    <string name="action_share">分享</string>
+
 </resources>

@@ -1,9 +1,12 @@
 package com.king.simplereading.utils;
 
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,5 +99,29 @@ public class CommonUtils {
             }
         }
     }
+
+    /**
+     * 实现文本复制功能
+     *
+     * @param content 复制的文本
+     */
+    public static void copy(String content) {
+        // 得到剪贴板管理器
+        ClipboardManager cmb = (ClipboardManager) Utils.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(content.trim());
+    }
+
+    /**
+     * 使用浏览器打开链接
+     */
+    public static void openLink(Context context, String content) {
+        Uri issuesUrl = Uri.parse(content);
+        Intent intent = new Intent(Intent.ACTION_VIEW, issuesUrl);
+        context.startActivity(intent);
+    }
+
+
+
+
 
 }
