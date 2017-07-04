@@ -1,11 +1,17 @@
 package com.king.simplereading.di.components;
 
+import android.content.Context;
+
 import com.king.simplereading.app.App;
 import com.king.simplereading.di.modules.AppModule;
+import com.king.simplereading.di.modules.NetModule;
+import com.king.simplereading.http.ApiService;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 /**
  * <请描述这个类是干什么的>
@@ -14,9 +20,12 @@ import dagger.Component;
  * @Email:634051075@qq.com
  */
 @Singleton
-@Component(modules = {AppModule.class})
+@Component(modules = {AppModule.class, NetModule.class})
 public interface AppComponent
 {
-    App getContext();// 提供App的Context
-
+    Context getContext();// 提供App的Context
+    App getApp();
+    ApiService getApiService();
+    OkHttpClient getOkHttp();
+    Retrofit getRetrofit();
 }

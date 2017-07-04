@@ -1,5 +1,7 @@
 package com.king.simplereading.di.modules;
 
+import android.content.Context;
+
 import com.king.simplereading.app.App;
 
 import javax.inject.Singleton;
@@ -16,16 +18,23 @@ import dagger.Provides;
 @Module
 public class AppModule
 {
+    private Context context;
     private App mApp;
 
     public AppModule(App app){
         this.mApp= app;
+        this.context = app;
     }
-
 
     @Provides
     @Singleton
-    public App provideApplicationContext()
+    public Context providerContext(){
+        return context;
+    }
+
+    @Provides
+    @Singleton
+    public App provideApp()
     {
         return mApp;
     }

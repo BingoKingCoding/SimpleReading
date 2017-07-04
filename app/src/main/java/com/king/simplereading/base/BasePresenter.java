@@ -53,6 +53,10 @@ public class BasePresenter<T extends BaseView>
         }
     }
 
+
+    /**
+     * @Description  解除与view的关系
+     */
     public void detachView() {
         if (mReferenceView != null)
             mReferenceView.clear();
