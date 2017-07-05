@@ -59,7 +59,8 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     private String mUrl;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getIntentData();
         initTitle();
@@ -67,7 +68,8 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
         webView.loadUrl(mUrl);
     }
 
-    private void initTitle() {
+    private void initTitle()
+    {
         StatusBarUtil.setColor(this, CommonUtils.getColor(R.color.colorTheme), 0);
         mProgressBar = (ProgressBar) findViewById(R.id.pb_progress);
         webView = (WebView) findViewById(R.id.webview_detail);
@@ -75,7 +77,8 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
         mTitleToolBar = (Toolbar) findViewById(R.id.title_tool_bar);
         setSupportActionBar(mTitleToolBar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
+        if (actionBar != null)
+        {
             //去除默认Title显示
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayShowTitleEnabled(false);
@@ -84,18 +87,28 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
         }
         setTitle(mTitle);
         mTitleToolBar.setOverflowIcon(ContextCompat.getDrawable(this, R.mipmap.actionbar_more));
-        mTitleToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+        mTitleToolBar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void onClick(View v)
+            {
+                if (goBack())
+                {
+                } else
+                {
+                    onBackPressed();
+                }
             }
         });
-        mTitleToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        mTitleToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener()
+        {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                switch (item.getItemId())
+                {
                     case R.id.actionbar_share:// 分享到
-                        String shareText = mWebChromeClient.getTitle() + mUrl + "（分享自"+R.string.app_name+"）";
+                        String shareText = mWebChromeClient.getTitle() + mUrl + "（分享自" + R.string.app_name + "）";
                         ShareUtils.share(WebViewActivity.this, shareText);
                         break;
                     case R.id.actionbar_cope:// 复制链接
@@ -112,23 +125,28 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.webview_menu, menu);
         return true;
     }
 
-    private void getIntentData() {
-        if (getIntent() != null) {
+    private void getIntentData()
+    {
+        if (getIntent() != null)
+        {
             mTitle = getIntent().getStringExtra("mTitle");
             mUrl = getIntent().getStringExtra("mUrl");
         }
     }
 
-    public void setTitle(String mTitle) {
+    public void setTitle(String mTitle)
+    {
         mTitleToolBar.setTitle(mTitle);
     }
 
-    private void initWebView() {
+    private void initWebView()
+    {
         mProgressBar.setVisibility(View.VISIBLE);
         WebSettings ws = webView.getSettings();
         // 网页内容的宽度是否可大于WebView控件的宽度
@@ -160,7 +178,8 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
         ws.setSupportMultipleWindows(true);
 
         // webview从5.0开始默认不允许混合模式,https中不能加载http资源,需要设置开启。
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
             ws.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
         /** 设置字体默认缩放大小(改变网页字体大小,setTextSize  api14被弃用)*/
@@ -174,27 +193,32 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     }
 
     @Override
-    public void hindProgressBar() {
+    public void hindProgressBar()
+    {
         mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void startProgress() {
+    public void startProgress()
+    {
         startProgress90();
     }
 
     @Override
-    public void showWebView() {
+    public void showWebView()
+    {
         webView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hindWebView() {
+    public void hindWebView()
+    {
         webView.setVisibility(View.INVISIBLE);
     }
 
     @Override
-    public void fullViewAddView(View view) {
+    public void fullViewAddView(View view)
+    {
         FrameLayout decor = (FrameLayout) getWindow().getDecorView();
         videoFullView = new FullscreenHolder(WebViewActivity.this);
         videoFullView.addView(view);
@@ -202,22 +226,28 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     }
 
     @Override
-    public void showVideoFullView() {
+    public void showVideoFullView()
+    {
         videoFullView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hindVideoFullView() {
+    public void hindVideoFullView()
+    {
         videoFullView.setVisibility(View.GONE);
     }
 
     @Override
-    public void progressChanged(int newProgress) {
-        if (mProgress90) {
+    public void progressChanged(int newProgress)
+    {
+        if (mProgress90)
+        {
             int progress = newProgress * 100;
-            if (progress > 900) {
+            if (progress > 900)
+            {
                 mProgressBar.setProgress(progress);
-                if (progress == 1000) {
+                if (progress == 1000)
+                {
                     mProgressBar.setVisibility(View.GONE);
                 }
             }
@@ -225,7 +255,8 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     }
 
     @Override
-    public void addImageClickListener() {
+    public void addImageClickListener()
+    {
         // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
         // 如要点击一张图片在弹出的页面查看所有的图片集合,则获取的值应该是个图片数组
         webView.loadUrl("javascript:(function(){" +
@@ -251,16 +282,22 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     /**
      * 进度条 假装加载到90%
      */
-    public void startProgress90() {
-        for (int i = 0; i < 900; i++) {
+    public void startProgress90()
+    {
+        for (int i = 0; i < 900; i++)
+        {
             final int progress = i + 1;
-            mProgressBar.postDelayed(new Runnable() {
+            mProgressBar.postDelayed(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     mProgressBar.setProgress(progress);
-                    if (progress == 900) {
+                    if (progress == 900)
+                    {
                         mProgress90 = true;
-                        if (mPageFinish) {
+                        if (mPageFinish)
+                        {
                             startProgress90to100();
                         }
                     }
@@ -272,14 +309,19 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     /**
      * 进度条 加载到100%
      */
-    public void startProgress90to100() {
-        for (int i = 900; i <= 1000; i++) {
+    public void startProgress90to100()
+    {
+        for (int i = 900; i <= 1000; i++)
+        {
             final int progress = i + 1;
-            mProgressBar.postDelayed(new Runnable() {
+            mProgressBar.postDelayed(new Runnable()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     mProgressBar.setProgress(progress);
-                    if (progress == 1000) {
+                    if (progress == 1000)
+                    {
                         mProgressBar.setVisibility(View.GONE);
                     }
                 }
@@ -288,14 +330,16 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     }
 
 
-    public FrameLayout getVideoFullView() {
+    public FrameLayout getVideoFullView()
+    {
         return videoFullView;
     }
 
     /**
      * 全屏时按返加键执行退出全屏方法
      */
-    public void hideCustomView() {
+    public void hideCustomView()
+    {
         mWebChromeClient.onHideCustomView();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
@@ -304,29 +348,37 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
      * 上传图片之后的回调
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE)
+        {
             mWebChromeClient.mUploadMessage(intent, resultCode);
-        } else if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE_FOR_ANDROID_5) {
+        } else if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE_FOR_ANDROID_5)
+        {
             mWebChromeClient.mUploadMessageForAndroid5(intent, resultCode);
         }
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
             //全屏播放退出全屏
-            if (mWebChromeClient.inCustomView()) {
+            if (mWebChromeClient.inCustomView())
+            {
                 hideCustomView();
                 return true;
 
                 //返回网页上一页
-            } else if (webView.canGoBack()) {
+            } else if (webView.canGoBack())
+            {
                 webView.goBack();
                 return true;
 
                 //退出网页
-            } else {
+            } else
+            {
                 webView.loadUrl("about:blank");
                 finish();
             }
@@ -335,13 +387,15 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         webView.onPause();
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutId()
+    {
         return R.layout.activity_web_view;
     }
 
@@ -352,24 +406,29 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         webView.onResume();
         // 支付宝网页版在打开文章详情之后,无法点击按钮下一步
         webView.resumeTimers();
         // 设置为横屏
-        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
         videoFullView.removeAllViews();
-        if (webView != null) {
+        if (webView != null)
+        {
             ViewGroup parent = (ViewGroup) webView.getParent();
-            if (parent != null) {
+            if (parent != null)
+            {
                 parent.removeView(webView);
             }
             webView.removeAllViews();
@@ -389,10 +448,24 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
      * @param mUrl     要加载的网页url
      * @param mTitle   title
      */
-    public static void loadUrl(Context mContext, String mUrl, String mTitle) {
+    public static void loadUrl(Context mContext, String mUrl, String mTitle)
+    {
         Intent intent = new Intent(mContext, WebViewActivity.class);
         intent.putExtra("mUrl", mUrl);
         intent.putExtra("mTitle", mTitle);
         mContext.startActivity(intent);
     }
+
+
+    public boolean goBack()
+    {
+        boolean goback = false;
+        if (webView != null && webView.canGoBack())
+        {
+            webView.goBack();
+            goback = true;
+        }
+        return goback;
+    }
+
 }

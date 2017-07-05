@@ -42,6 +42,10 @@
                   android:windowSoftInputMode="adjustPan"
         >
         </activity>
+        <activity
+            android:name=".mvp.ui.activity.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/windowTranslucentMovieTop" />
     </application>
 
 </manifest>
