@@ -1,11 +1,15 @@
 package com.king.simplereading.view.webview;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.king.simplereading.mvp.ui.activity.WebViewActivity;
 
 /**
  * <请描述这个类是干什么的>
@@ -42,5 +46,36 @@ public class AppJsHandler extends BaseJsHandler
             ToastUtils.showShort("----点击了文字");
         }
     }
+
+    /**
+     * @Description 检查网络
+     */
+    @JavascriptInterface
+    public void check_network()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("网络设置提示");
+        builder.setMessage("网络连接不可用，是否进行设置?");
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                NetworkUtils.openWirelessSettings();
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * @Description 重新加载
+     */
+    @JavascriptInterface
+    public void refresh_reload()
+    {
+        ((WebViewActivity)getActivity()).loadUrl();
+    }
+
 
 }

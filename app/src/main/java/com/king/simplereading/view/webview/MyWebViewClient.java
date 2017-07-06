@@ -3,6 +3,8 @@ package com.king.simplereading.view.webview;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -55,7 +57,7 @@ public class MyWebViewClient extends WebViewClient {
         }
         mIWebPageView.startProgress();
         view.loadUrl(url);
-        return false;
+        return true;
     }
 
     @Override
@@ -80,5 +82,12 @@ public class MyWebViewClient extends WebViewClient {
         if (newScale - oldScale > 7) {
             view.setInitialScale((int) (oldScale / newScale * 100)); //异常放大，缩回去。
         }
+    }
+
+    @Override
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
+    {
+        super.onReceivedError(view, request, error);
+        mActivity.webView.loadUrl(WebViewActivity.no_network_url);
     }
 }

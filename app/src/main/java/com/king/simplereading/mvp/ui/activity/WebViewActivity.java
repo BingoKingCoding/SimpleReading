@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,10 +41,11 @@ import com.king.simplereading.view.webview.ShareUtils;
  */
 public class WebViewActivity extends BaseActivity implements IWebPageView
 {
-
+    //加载错误时候网页
+    public static final String no_network_url = "file:///android_asset/error_network.html";
     // 进度条
     ProgressBar mProgressBar;
-    WebView webView;
+    public WebView webView;
     // 全屏时视频加载view
     FrameLayout videoFullView;
     Toolbar mTitleToolBar;
@@ -65,7 +67,14 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
         getIntentData();
         initTitle();
         initWebView();
-        webView.loadUrl(mUrl);
+        loadUrl();
+    }
+
+    public void loadUrl(){
+        if (!TextUtils.isEmpty(mUrl))
+        {
+            webView.loadUrl(mUrl);
+        }
     }
 
     private void initTitle()
@@ -92,6 +101,11 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
             @Override
             public void onClick(View v)
             {
+                if (no_network_url.equals(webView.getUrl())) {
+                    //如果当前url是网络错误的url，返回就关闭页面
+                    finish();
+                    return;
+                }
                 if (goBack())
                 {
                 } else
