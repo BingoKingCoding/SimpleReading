@@ -9,7 +9,7 @@ import java.util.List;
  * Created by jingbin on 2016/11/24.
  */
 
-public class GankIoDataBean implements Serializable {
+public class GankIoDataBean extends BaseModel implements Serializable {
 
     private boolean error;
     /**
