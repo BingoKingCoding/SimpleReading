@@ -1,7 +1,6 @@
 package com.king.simplereading.di.modules.fragmentmodules;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.king.simplereading.di.scopes.UserScope;
 import com.king.simplereading.mvp.ui.adapter.GankIoAndroidAdapter;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import dagger.Provides;
 @Module
 public class AndroidModule
 {
-    @UserScope
     @Provides
     public BaseQuickAdapter provideAdapter(){
         return new GankIoAndroidAdapter(new ArrayList());

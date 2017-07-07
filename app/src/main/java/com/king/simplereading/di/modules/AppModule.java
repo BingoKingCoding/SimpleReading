@@ -3,8 +3,7 @@ package com.king.simplereading.di.modules;
 import android.content.Context;
 
 import com.king.simplereading.app.App;
-
-import javax.inject.Singleton;
+import com.king.simplereading.di.scopes.UserScope;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,13 +26,13 @@ public class AppModule
     }
 
     @Provides
-    @Singleton
+    @UserScope
     public Context providerContext(){
         return context;
     }
 
     @Provides
-    @Singleton
+    @UserScope
     public App provideApp()
     {
         return mApp;

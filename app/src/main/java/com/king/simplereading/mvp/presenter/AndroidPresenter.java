@@ -1,8 +1,8 @@
 package com.king.simplereading.mvp.presenter;
 
 import com.king.simplereading.base.BasePresenter;
-import com.king.simplereading.http.ApiService;
 import com.king.simplereading.http.Callback;
+import com.king.simplereading.http.Repository;
 import com.king.simplereading.http.model.GankIoDataBean;
 import com.king.simplereading.mvp.contract.AndroidFragmentContract;
 
@@ -17,18 +17,17 @@ import javax.inject.Inject;
 
 public class AndroidPresenter extends BasePresenter<AndroidFragmentContract.View> implements AndroidFragmentContract.Presenter
 {
-    private ApiService mApiService;
+    private Repository mRepository;
 
     @Inject
-    public AndroidPresenter(ApiService apiService){
-        this.mApiService = apiService;
+    public AndroidPresenter(Repository mRepository){
+        this.mRepository = mRepository;
     }
-
 
     @Override
     public void fetchGankIoData(int page, int pre_page)
     {
-        invoke(mApiService.getGankIoData("Android",page,pre_page),new Callback<GankIoDataBean>(){
+        invoke(mRepository.getGankIoData("Android",page,pre_page),new Callback<GankIoDataBean>(){
             @Override
             public void onResponse(GankIoDataBean data)
             {

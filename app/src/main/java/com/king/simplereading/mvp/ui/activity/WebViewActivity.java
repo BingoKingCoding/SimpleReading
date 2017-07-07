@@ -34,9 +34,7 @@ import com.king.simplereading.view.webview.ShareUtils;
 
 /**
  * 网页可以处理:
- * 点击相应控件:拨打电话、发送短信、发送邮件、上传图片、播放视频
  * 进度条、返回网页上一层、显示网页标题
- * Thanks to: https://github.com/youlookwhat/WebViewStudy
  * contact me: http://www.jianshu.com/users/e43c6e979831/latest_articles
  */
 public class WebViewActivity extends BaseActivity implements IWebPageView
@@ -201,7 +199,7 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
 
         mWebChromeClient = new MyWebChromeClient(this);
         webView.setWebChromeClient(mWebChromeClient);
-        // 与js交互
+        // 与js交互(这里的"App"可根据公司前端协商定义)
         webView.addJavascriptInterface(new AppJsHandler(this), "App");
         webView.setWebViewClient(new MyWebViewClient(this));
     }
@@ -268,30 +266,6 @@ public class WebViewActivity extends BaseActivity implements IWebPageView
         }
     }
 
-    @Override
-    public void addImageClickListener()
-    {
-        // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
-        // 如要点击一张图片在弹出的页面查看所有的图片集合,则获取的值应该是个图片数组
-        webView.loadUrl("javascript:(function(){" +
-                "var objs = document.getElementsByTagName(\"img\");" +
-                "for(var i=0;i<objs.length;i++)" +
-                "{" +
-                //  "objs[i].onclick=function(){alert(this.getAttribute(\"has_link\"));}" +
-                "objs[i].onclick=function(){window.injectedObject.imageClick(this.getAttribute(\"src\"),this.getAttribute(\"has_link\"));}" +
-                "}" +
-                "})()");
-
-        // 遍历所有的a节点,将节点里的属性传递过去(属性自定义,用于页面跳转)
-        webView.loadUrl("javascript:(function(){" +
-                "var objs =document.getElementsByTagName(\"a\");" +
-                "for(var i=0;i<objs.length;i++)" +
-                "{" +
-                "objs[i].onclick=function(){" +
-                "window.injectedObject.textClick(this.getAttribute(\"type\"),this.getAttribute(\"item_pk\"));}" +
-                "}" +
-                "})()");
-    }
 
     /**
      * 进度条 假装加载到90%

@@ -1,11 +1,13 @@
 package com.king.simplereading.di.modules;
 
 import com.king.simplereading.BuildConfig;
-import com.king.simplereading.http.ApiService;
+import com.king.simplereading.di.scopes.UserScope;
+import com.king.simplereading.http.Repository;
+import com.king.simplereading.http.RepositoryImpl;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Singleton;
+import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,46 +24,71 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetModule
 {
-    private String baseUrl = "http://gank.io/api/";
+    private String gankUrl = "http://gank.io/api/";
+    private String zhihuUrl = "http://news-at.zhihu.com/api/4/";
 
-    @Singleton
     @Provides
-    public OkHttpClient provideOkHttpClient()
-    {
+    @UserScope
+    Repository provideRepository(@Named("gank") Retrofit gank, @Named("zhihu") Retrofit lastfm) {
+        return new RepositoryImpl(gank, lastfm);
+    }
+
+    @UserScope
+    @Provides
+    Retrofit.Builder provideRetrofitBuilder() {
+        return new Retrofit.Builder();
+    }
+
+    @UserScope
+    @Provides
+    OkHttpClient.Builder provideOkHttpBuilder() {
+        return new OkHttpClient.Builder();
+    }
+
+    @UserScope
+    @Provides
+    OkHttpClient provideClient(OkHttpClient.Builder builder) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         //设置超时
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS)
-                //错误重连
-                .retryOnConnectionFailure(true)
-                .addInterceptor(loggingInterceptor)
-                .build();
-        return okHttpClient;
+        builder.connectTimeout(10, TimeUnit.SECONDS);
+        builder.readTimeout(20, TimeUnit.SECONDS);
+        builder.writeTimeout(20, TimeUnit.SECONDS);
+        builder.addInterceptor(loggingInterceptor);
+        //错误重连
+        builder.retryOnConnectionFailure(true);
+        return builder.build();
     }
 
-    @Singleton
+
     @Provides
-    public Retrofit provideRetrofit(OkHttpClient client)
+    @Named("gank")
+    @UserScope
+    public Retrofit provideGankRetrofit(OkHttpClient client)
     {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(client)
-                .baseUrl(baseUrl)
+                .baseUrl(gankUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-
         return retrofit;
     }
 
-    @Singleton
     @Provides
-    public ApiService provideApiService(Retrofit retrofit)
+    @Named("zhihu")
+    @UserScope
+    public Retrofit provideZhihuRetrofit(OkHttpClient client)
     {
-        return retrofit.create(ApiService.class);
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(zhihuUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return retrofit;
     }
+
 
 
 }

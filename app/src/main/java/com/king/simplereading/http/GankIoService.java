@@ -1,5 +1,6 @@
 package com.king.simplereading.http;
 
+
 import com.king.simplereading.http.model.GankIoDataBean;
 
 import retrofit2.http.GET;
@@ -7,12 +8,19 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 /**
- * <网络接口>
- * Created by wwb on 2017/7/4 09:38.
+ * Created by quantan.liu on 2017/3/22.
  */
 
-public interface ApiService
+public interface GankIoService
 {
+
+     String API_GANKIO = "http://gank.io/api/";
+    /**
+     * 每日数据： http://gank.io/api/day/年/月/日
+     * eg:http://gank.io/api/day/2015/08/06
+     */
+//    @GET("day/{year}/{month}/{day}")
+//    Observable<GankIoDayBean> getGankIoDay(@Path("year") String year, @Path("month") String month, @Path("day") String day);
 
     /**
      * 分类数据: http://gank.io/api/data/数据类型/请求个数/第几页
@@ -23,5 +31,6 @@ public interface ApiService
      */
     @GET("data/{type}/{pre_page}/{page}")
     Observable<GankIoDataBean> getGankIoData(@Path("type") String id, @Path("page") int page, @Path("pre_page") int pre_page);
+
 
 }

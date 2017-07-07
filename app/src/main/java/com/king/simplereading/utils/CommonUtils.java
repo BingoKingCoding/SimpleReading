@@ -1,12 +1,15 @@
 package com.king.simplereading.utils;
 
+import android.app.Activity;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +123,26 @@ public class CommonUtils {
         context.startActivity(intent);
     }
 
-
+    /**
+     * 网络配置
+     */
+    public static void openWirelessSettings(Activity activity)
+    {
+        Intent intent = null;
+        // 判断手机系统的版本 即API大于10 就是3.0或以上版本
+        if (android.os.Build.VERSION.SDK_INT > 10)
+        {
+            intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+        } else
+        {
+            intent = new Intent();
+            ComponentName component =
+                    new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
+            intent.setComponent(component);
+            intent.setAction("android.intent.action.VIEW");
+        }
+        activity.startActivity(intent);
+    }
 
 
 
