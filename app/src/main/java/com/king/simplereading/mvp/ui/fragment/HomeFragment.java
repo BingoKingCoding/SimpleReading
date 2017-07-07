@@ -1,8 +1,8 @@
 package com.king.simplereading.mvp.ui.fragment;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 
 import com.king.simplereading.R;
 import com.king.simplereading.base.BaseFragment;
@@ -22,14 +22,15 @@ import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment
 {
+
     @BindView(R.id.tab_gank)
-    Toolbar mTabGank;
+    TabLayout mTabGank;
     @BindView(R.id.vp_gank)
     ViewPager mVpGank;
-
     private ArrayList<String> mTitleList = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private HomeFragmentPageAdapter mAdapter;
+
     @Override
     protected void loadData()
     {
@@ -46,13 +47,29 @@ public class HomeFragment extends BaseFragment
     protected void initView()
     {
         initFragments();
+        mAdapter = new HomeFragmentPageAdapter(getChildFragmentManager(), mFragments, mTitleList);
+        mVpGank.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        mTabGank.setTabMode(TabLayout.MODE_FIXED);
+        mTabGank.setupWithViewPager(mVpGank);
     }
 
     private void initFragments()
     {
-        if(mTitleList.size()!=0){
+        if (mTitleList.size() != 0)
+        {
             return;
         }
+        mTitleList.add("知乎日报");
+        mTitleList.add("头条新闻");
+        mTitleList.add("排行榜");
+        mTitleList.add("最新电影");
+        mFragments.add(new ZhiHuHomeFragment());
+        mFragments.add(new TopNewsFragment());
+        mFragments.add(new DouBanMovieTopFragment());
+        mFragments.add(new DouBanMovieLatestFragment());
+
+
     }
 
     @Override
