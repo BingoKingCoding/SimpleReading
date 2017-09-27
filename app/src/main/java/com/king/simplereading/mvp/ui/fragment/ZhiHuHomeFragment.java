@@ -10,6 +10,8 @@ import com.king.simplereading.base.BaseFragment;
 
 public class ZhiHuHomeFragment extends BaseFragment
 {
+
+
     @Override
     protected void loadData()
     {

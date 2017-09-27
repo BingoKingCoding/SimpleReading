@@ -3,7 +3,7 @@ package com.king.simplereading.http;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.king.simplereading.base.BaseView;
-import com.king.simplereading.common.AppConstants;
+import com.king.simplereading.view.LoadingPage;
 
 import rx.Subscriber;
 
@@ -48,7 +48,7 @@ public class Callback<T> extends Subscriber<T>
     @Override
     public void onNext(T data)
     {
-        target.setState(AppConstants.STATE_SUCCESS);
+        target.setState(LoadingPage.STATE_SUCCESS);
         onResponse();
         onResponse(data);
     }
@@ -75,14 +75,14 @@ public class Callback<T> extends Subscriber<T>
             ToastUtils.showShort("你连接的网络有问题，请检查路由器");
             if (target != null)
             {
-                target.setState(AppConstants.STATE_ERROR);
+                target.setState(LoadingPage.STATE_ERROR);
             }
             return;
         }
         ToastUtils.showShort("程序员哥哥偷懒去了，快去举报他");
         if (target != null)
         {
-            target.setState(AppConstants.STATE_EMPTY);
+            target.setState(LoadingPage.STATE_EMPTY);
         }
     }
 }

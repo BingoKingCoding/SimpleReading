@@ -2,12 +2,12 @@ package com.king.simplereading.http;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.king.simplereading.common.AppConstants;
 import com.king.simplereading.rx.LifeSubscription;
+import com.king.simplereading.view.LoadingPage;
 
-import rx.android.schedulers.AndroidSchedulers;
 import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
@@ -32,7 +32,7 @@ public class HttpUtils
             ToastUtils.showShort("网络连接已断开");
             if (target != null)
             {
-                target.setState(AppConstants.STATE_ERROR);
+                target.setState(LoadingPage.STATE_ERROR);
             }
             return;
         }

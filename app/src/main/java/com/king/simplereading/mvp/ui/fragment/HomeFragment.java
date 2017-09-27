@@ -6,8 +6,8 @@ import android.support.v4.view.ViewPager;
 
 import com.king.simplereading.R;
 import com.king.simplereading.base.BaseFragment;
-import com.king.simplereading.common.AppConstants;
 import com.king.simplereading.mvp.ui.adapter.HomeFragmentPageAdapter;
+import com.king.simplereading.view.LoadingPage;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class HomeFragment extends BaseFragment
     @Override
     protected void loadData()
     {
-        setState(AppConstants.STATE_SUCCESS);
+        setState(LoadingPage.STATE_SUCCESS);
     }
 
     @Override
@@ -68,8 +68,6 @@ public class HomeFragment extends BaseFragment
         mFragments.add(new TopNewsFragment());
         mFragments.add(new DouBanMovieTopFragment());
         mFragments.add(new DouBanMovieLatestFragment());
-
-
     }
 
     @Override

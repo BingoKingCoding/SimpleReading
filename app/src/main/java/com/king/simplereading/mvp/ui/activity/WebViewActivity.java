@@ -35,7 +35,6 @@ import com.king.simplereading.view.webview.ShareUtils;
 /**
  * 网页可以处理:
  * 进度条、返回网页上一层、显示网页标题
- * contact me: http://www.jianshu.com/users/e43c6e979831/latest_articles
  */
 public class WebViewActivity extends BaseActivity implements IWebPageView
 {

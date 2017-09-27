@@ -10,9 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.king.simplereading.R;
-import com.king.simplereading.common.AppConstants;
-
-import static com.king.simplereading.common.AppConstants.STATE_LOADING;
 
 /**
  * <加载页面>
@@ -21,7 +18,11 @@ import static com.king.simplereading.common.AppConstants.STATE_LOADING;
 
 public abstract class LoadingPage extends FrameLayout
 {
-
+    public static final int STATE_UNKNOWN = 0;
+    public static final int STATE_LOADING = 1;
+    public static final int STATE_ERROR = 2;
+    public static final int STATE_EMPTY = 3;
+    public static final int STATE_SUCCESS = 4;
     private View loadingView;                 // 加载中的界面
     private View errorView;                   // 错误界面
     private View emptyView;                   // 空界面
@@ -30,7 +31,7 @@ public abstract class LoadingPage extends FrameLayout
     private AnimationDrawable mAnimationDrawable;
     private ImageView img;
 
-    public int state = AppConstants.STATE_UNKNOWN;
+    public int state = STATE_UNKNOWN;
 
     private Context mContext;
 
@@ -78,7 +79,7 @@ public abstract class LoadingPage extends FrameLayout
     }
 
     private View createLoadingView() {
-        loadingView = LayoutInflater.from(mContext).inflate(R.layout.basefragment_state_loading, null);
+        loadingView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_loading, null);
         img = (ImageView) loadingView.getRootView().findViewById(R.id.img_progress);
         // 加载动画 这边也可以直接用progressbar 可以看看topnews页下拉刷新就是只用用progressbar控制动画
         mAnimationDrawable = (AnimationDrawable) img.getDrawable();
@@ -90,13 +91,13 @@ public abstract class LoadingPage extends FrameLayout
     }
 
     private View createEmptyView() {
-        emptyView = LayoutInflater.from(mContext).inflate(R.layout.basefragment_state_empty, null);
+        emptyView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_empty, null);
         return emptyView;
     }
 
 
     private View createErrorView() {
-        errorView = LayoutInflater.from(mContext).inflate(R.layout.basefragment_state_error, null);
+        errorView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_error, null);
         errorView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +123,7 @@ public abstract class LoadingPage extends FrameLayout
 
     public void showPage() {
         if (loadingView != null) {
-            if (state == AppConstants.STATE_UNKNOWN || state == AppConstants.STATE_LOADING) {
+            if (state == STATE_UNKNOWN || state == STATE_LOADING) {
                 loadingView.setVisibility(View.VISIBLE);
                 // 开始动画
                 startAnimation();
@@ -132,21 +133,21 @@ public abstract class LoadingPage extends FrameLayout
                 loadingView.setVisibility(View.GONE);
             }
         }
-        if (state == AppConstants.STATE_EMPTY || state == AppConstants.STATE_ERROR || state == AppConstants.STATE_SUCCESS) {
+        if (state == STATE_EMPTY || state == STATE_ERROR || state == STATE_SUCCESS) {
             // 关闭动画
             stopAnimation();
         }
 
 
         if (emptyView != null) {
-            emptyView.setVisibility(state == AppConstants.STATE_EMPTY ? View.VISIBLE : View.GONE);
+            emptyView.setVisibility(state == STATE_EMPTY ? View.VISIBLE : View.GONE);
         }
 
         if (errorView != null) {
-            errorView.setVisibility(state == AppConstants.STATE_ERROR ? View.VISIBLE : View.GONE);
+            errorView.setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
         }
 
-        if (state == AppConstants.STATE_SUCCESS) {
+        if (state == STATE_SUCCESS) {
             if (contentView == null) {
                 contentView = LayoutInflater.from(mContext).inflate(getLayoutId(), null);
                 addView(contentView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -161,17 +162,19 @@ public abstract class LoadingPage extends FrameLayout
     }
 
     /**
-     * @param
+     * 1、
      * @Description 初始化布局，当网络请求成功时显示
      */
     protected abstract int getLayoutId();
 
     /**
+     * 2、
      * 子类关于View的操作(如setAdapter)都必须在这里面，会因为页面状态不为成功，而binding还没创建就引用而导致空指针。
      */
     protected abstract void initView();
 
     /**
+     * 3、
      * 当网络获取失败 点击进行网络请求时调用
      * 根据网络获取的数据返回状态，每一个子类的获取网络返回的都不一样，所以要交给子类去完成
      */

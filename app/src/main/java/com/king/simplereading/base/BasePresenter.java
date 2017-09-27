@@ -1,10 +1,10 @@
 package com.king.simplereading.base;
 
-import com.king.simplereading.common.AppConstants;
 import com.king.simplereading.http.Callback;
 import com.king.simplereading.http.HttpUtils;
 import com.king.simplereading.http.Stateful;
 import com.king.simplereading.rx.LifeSubscription;
+import com.king.simplereading.view.LoadingPage;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
@@ -48,7 +48,7 @@ public class BasePresenter<T extends BaseView>
     public void checkState(List list) {
         if (list.size() == 0) {
             if (mView instanceof Stateful)
-                ((Stateful) mView).setState(AppConstants.STATE_EMPTY);
+                ((Stateful) mView).setState(LoadingPage.STATE_EMPTY);
             return;
         }
     }
